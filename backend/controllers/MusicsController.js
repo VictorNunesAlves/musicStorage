@@ -4,6 +4,8 @@ const ObjectId = require('mongoose').Types.ObjectId
 module.exports = class MusicsController{
     
     static async create(req, res){
+        //TODO: somente admin consege fazer isso, adicionar verificação de conta por token
+
         const { name, artist, album, letter, genre } = req.body
         let fileUrl = ""
 
@@ -49,6 +51,7 @@ module.exports = class MusicsController{
     }
 
     static async update(req, res){
+        //TODO: somente admin consege fazer isso, adicionar verificação de conta por token
         const { name, genre, artist, album, letter } = req.body
         let fileUrl = ''
         if(req.file){
@@ -89,6 +92,10 @@ module.exports = class MusicsController{
         res.status(200).json({msg: "usuário atualizado com sucesso"})
     }
 
+    static async delete(req, res){
+        //TODO: somente admin consege fazer isso, adicionar verificação de conta por token
+    }
+
     static async search(req, res){
         const musicReq = req.query.musicReq
 
@@ -96,13 +103,14 @@ module.exports = class MusicsController{
             return res.status(400).json({msg: "Termo de Busca Vazio"})
         }
 
-        console.log(musicReq)
-
         try {
+
             const musics = await Musics.find({
                 $or: [
                     {name: {$regex: musicReq, $options: 'i'}},
-                    {artist: {$regex: musicReq, $options: 'i'}}
+                    {artist: {$regex: musicReq, $options: 'i'}},
+                    {album: {$regex: musicReq, $options: 'i'}},
+                    {letter: {$regex: musicReq, $options: 'i'}}
                 ]
             })
             res.status(200).json(musics)

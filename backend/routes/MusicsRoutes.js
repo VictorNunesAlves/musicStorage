@@ -6,5 +6,6 @@ const { musicUpload } = require("../helpers/music-storage")
 router.post("/create", musicUpload.single('music'), MusicsController.create)
 router.patch("/edit/:id", musicUpload.single('music'),MusicsController.update)
 router.get("/search", MusicsController.search)
+router.delete("/delete", MusicsController.delete)
 
 module.exports = router
