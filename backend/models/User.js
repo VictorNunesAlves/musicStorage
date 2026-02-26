@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
-const { STRING } = require ('sequelize')
+const {Schema} =  mongoose
 
 const User = mongoose.model(
     'User',
-    new mongoose.Schema({
-        name: {type: STRING, required: true},
-        email: {type: STRING, required: true},
-        password: {type: STRING, required: true},
+    new Schema({
+        name: {type: String, required: true},
+        email: {type: String, required: true},
+        password: {type: String, required: true},
         playlists: [{
-            name:{type: STRING, required: true, unique: true},
-            description: {type: STRING},
+            name:{type: String, required: true, unique: true},
+            description: {type: String},
             musics: [{type: mongoose.Types.ObjectId, ref: 'Musics'}]
         }]
     },
